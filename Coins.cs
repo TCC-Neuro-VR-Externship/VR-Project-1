@@ -2,45 +2,27 @@ using System.Collections;
 using UnityEngine;
 
 public class Coins : MonoBehaviour {
-    
-    [SerializeField] private Transform rotTransform;
-    [SerializeField] private float rotSpeed = 45f;
-
     // How fast the coins float up and down
     // In cycles (up and down) per second
-    [SerializeField] private float floatSpeed = 1.0f;
-    [SerializeField] private float movementDistance = 0.5f;
-
+    private float floatSpeed = 0.5f;
+    private float movementDistance = 15f;
+    private float rotSpeed = .25f;
     private float startingY;
     private bool isMovingUp = true;
-
-    private void Awake() {
-        rotTransform = GetComponent<Transform>();
-    }
 
     private void Start() {
         startingY = transform.position.y;
 
         // Gives each instance a different time to rotate
         transform.Rotate(transform.up, Random.Range(0f, 360f));
-
         StartCoroutine(Spin());
         StartCoroutine(Float());
     }
-    
-    /*
-        CoRoutines start with "I". Advantages of couroutines over using the update function
-        are the ability to start/stop each coroutine independently. They need to have a yield and return.
-    */
-    
-    //private void Update() {
-    //    RotationTransformation.Rotate(0, 0, rotSpeed * Time.deltaTime);
-    //}
 
     public IEnumerator Spin() {
         while (true) {
-            transform.Rotate(transform.up, 360 * rotSpeed * Time.deltaTime);
-                yield return 0;
+            transform.Rotate(0f, 0f, 360 * rotSpeed * Time.deltaTime);
+            yield return 0;
         }
     }
 
@@ -58,7 +40,7 @@ public class Coins : MonoBehaviour {
             yield return 0;
         }
     }
-
+    
     private void OnTriggerEnter(Collider other) {
         // If collider is not player, do nothing and return
         if (!other.CompareTag("Player")) return;
