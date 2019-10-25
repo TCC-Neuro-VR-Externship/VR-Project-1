@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShooterRigidBody : MonoBehaviour {
-
-    // This allows an object to shoot ammo (physics based) by pressing the space bar
-
     public GameObject PrefabShoot;
 
     private void FixedUpdate() {

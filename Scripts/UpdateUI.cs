@@ -1,18 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UpdateUI : MonoBehaviour {
-    [SerializeField] private Text timerLabel;
-    private string timeFormatter(float timeInSeconds) {
-        // Convert the time into Minutes and Seconds
-        return string.Format("{0}:{1.00}",
-            Mathf.FloorToInt(timeInSeconds / 60),
-            Mathf.FloorToInt(timeInSeconds % 60));
+    private int countDownStartValue = 60;
+    public Text timerUI;
+
+    private void Start() {
+        CountDownTimer();
     }
 
-    private void Update() {
-        timerLabel.text = timeFormatter(GameManager.instance.TimeRemaining);
+    void CountDownTimer() {
+        if(countDownStartValue > 0) {
+            TimeSpan spanTime = TimeSpan.FromSeconds(countDownStartValue);
+            timerUI.text = "Timer: " + spanTime.Minutes + " : " + spanTime.Seconds;
+            countDownStartValue--;
+            Invoke("CountDownTimer", 1.0f);
+        } else {
+            timerUI.text = "Game Over";
+            SceneManager.LoadScene(5);
+        }
     }
 }

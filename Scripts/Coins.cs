@@ -4,17 +4,15 @@ using UnityEngine;
 public class Coins : MonoBehaviour {
     // How fast the coins float up and down
     // In cycles (up and down) per second
-    private float floatSpeed = 0.5f;
-    private float movementDistance = 15f;
-    private float rotSpeed = .25f;
+    private readonly float floatSpeed = 0.5f;
+    private readonly float movementDistance = 1f;
+    private readonly float rotSpeed = .25f;
     private float startingY;
     private bool isMovingUp = true;
 
     private void Start() {
         startingY = transform.position.y;
-
-        // Gives each instance a different time to rotate
-        transform.Rotate(transform.up, Random.Range(0f, 360f));
+        transform.Rotate(transform.up, Random.Range(0f, 360f)); // Gives each instance a different time to rotate
         StartCoroutine(Spin());
         StartCoroutine(Float());
     }
@@ -42,7 +40,6 @@ public class Coins : MonoBehaviour {
     }
     
     private void OnTriggerEnter(Collider other) {
-        // If collider is not player, do nothing and return
         if (!other.CompareTag("Player")) return;
 
         // Array that will hold total number of coins in the level
